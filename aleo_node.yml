@@ -20,6 +20,13 @@
         msg: "This playbook must be run as root."
       when: uid.stdout != "0"
 
+    - name: Create Aleo directory
+      ansible.builtin.file:
+        path: /root/aleo
+        state: directory
+        mode: '0777'  # Set permissions to 777
+      when: node_action == "install"   
+
     - name: Install dependencies
       ansible.builtin.apt:
         name:
